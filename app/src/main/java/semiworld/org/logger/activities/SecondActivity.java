@@ -34,7 +34,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import semiworld.org.logger.R;
-import semiworld.org.logger.classes.Note;
+import semiworld.org.logger.models.Note;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -122,8 +122,7 @@ public class SecondActivity extends AppCompatActivity {
 
     // Toggle between menu item to show keyboard
     private void selectMode(MenuItem item) {
-        if (item.getIcon().getConstantState()
-                .equals(getDrawable(android.R.drawable.ic_menu_edit).getConstantState())) {
+        if (item.getIcon().getConstantState().equals(getResources().getDrawable(android.R.drawable.ic_menu_edit).getConstantState())) {
 
             item.setIcon(android.R.drawable.ic_menu_view);
 

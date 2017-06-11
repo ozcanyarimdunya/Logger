@@ -18,7 +18,7 @@ import com.activeandroid.query.Select;
 import java.util.Calendar;
 import java.util.Locale;
 
-import semiworld.org.logger.classes.Note;
+import semiworld.org.logger.models.Note;
 
 /**
  * Created on 07.06.2017.

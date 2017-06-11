@@ -29,7 +29,7 @@ import java.util.Locale;
 
 import semiworld.org.logger.R;
 import semiworld.org.logger.activities.SecondActivity;
-import semiworld.org.logger.classes.Note;
+import semiworld.org.logger.models.Note;
 
 /**
  * Created on 07.06.2017.

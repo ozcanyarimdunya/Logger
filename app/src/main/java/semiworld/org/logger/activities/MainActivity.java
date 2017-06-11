@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import semiworld.org.logger.R;
 import semiworld.org.logger.adapters.NoteAdapter;
-import semiworld.org.logger.classes.Note;
+import semiworld.org.logger.models.Note;
 
 public class MainActivity extends AppCompatActivity {
 

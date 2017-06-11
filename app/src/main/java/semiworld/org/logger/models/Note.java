@@ -7,7 +7,7 @@
  *  of this license document, but changing it is not allowed.
  ******************************************************************************/
 
-package semiworld.org.logger.classes;
+package semiworld.org.logger.models;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
