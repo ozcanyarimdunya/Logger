@@ -69,8 +69,6 @@ public class SecondActivity extends AppCompatActivity {
             editTextThought.setFocusableInTouchMode(false);
             editTextThought.setClickable(false);
         }
-
-
     }
 
     // If it is a new note then you may hide some menu items

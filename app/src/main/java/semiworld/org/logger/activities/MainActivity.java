@@ -72,6 +72,27 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+/*
+ * run this codes once!
+
+        Intent login = new Intent(Intent.ACTION_VIEW, Uri.EMPTY, MainActivity.this, LoginActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent second = new Intent(Intent.ACTION_VIEW, Uri.EMPTY, MainActivity.this, SecondActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        ShortcutHelper.with(this)
+                .createShortcut(
+                        "Yeni Not",
+                        "Yeni Not Ekle",
+                        android.R.drawable.ic_input_add,
+                        second)
+                .createShortcut(
+                        "Çirkin",
+                        "Uygulamayı Aç",
+                        R.drawable.heart,
+                        login)
+                .go();
+*/
     }
 
     /*
@@ -86,11 +107,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-
-    /*
-    This is a generic definition in ButterKnife for onClick method
-
-     */
     @OnClick(R.id.fab)
     void fab_clicked() {
         startActivity(new Intent(getApplicationContext(), SecondActivity.class));
@@ -108,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_info) {
             WhoAmI();
+        }
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

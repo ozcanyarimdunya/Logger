@@ -8,13 +8,15 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 <resources>
-    <string name="app_name">Your Story</string>
-    <string name="title_activity_second">Your Story</string>
-    <string name="save">Save</string>
-    <string name="info">Info</string>
-    <string name="edit">Edit</string>
-    <string name="delete">delete</string>
-    <string name="thoughts">What do you want to tell us ?</string>
-    <string name="yes_delete">Yes,Delete</string>
-    <string name="delete_it">Delete ?</string>
+    <string name="app_name">Çirkin</string>
+    <string name="title_activity_second">Çirkin</string>
+    <string name="save">Kaydet</string>
+    <string name="info">Bilgi</string>
+    <string name="edit">Düzenle</string>
+    <string name="delete">Sil</string>
+    <string name="thoughts">İçinden neler geçiyorsa yaz :)</string>
+    <string name="yes_delete">Evet,Sil</string>
+    <string name="delete_it">Silinsin mi?</string>
+    <string name="password">Şifre ayarları</string>
+    <string name="title_activity_settings">Çirkin Ayarları</string>
 </resources>
