@@ -27,34 +27,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="10dp"
-        android:text="Şifreyle giriş"
+        android:text="@string/enter_with_password"
         android:textAlignment="viewStart"
-        android:textOff="Kapalı"
-        android:textOn="Açık"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
         android:textSize="18sp"
         android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txtDuration"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/txtDuration"
-        android:text="Başlangıç süresi(sn)"
-        android:textColor="#000"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-
-    <EditText
-        android:id="@+id/txtDuration"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberSigned"
-        android:textSize="14sp"
-        android:layout_below="@+id/txtPassword"
-        android:layout_alignParentEnd="true"/>
 
     <EditText
         android:id="@+id/txtPassword"
@@ -64,8 +42,51 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/switchParola"
         android:ems="10"
-        android:hint="Şifreyi girin"
+        android:hint="@string/enter_password"
         android:inputType="textPassword"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtPassword"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
+        android:textSize="8sp"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2"
+        android:layout_toStartOf="@+id/txtDuration"
+        android:text="@string/start_duration"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
+        android:id="@+id/txtDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView2"
+        app:snp_buttonBackgroundTintSelector="@color/black"
+        app:snp_buttonIconLeft="@drawable/ic_arrow_left"
+        app:snp_buttonIconRight="@drawable/ic_arrow_right"
+        app:snp_buttonTouchScaleFactor="0.8"
+
+        app:snp_maxValue="30"
+        app:snp_minValue="0"
+        app:snp_orientation="horizontal"
+        app:snp_valueMarginEnd="8dp"
+        app:snp_valueMarginStart="8dp"
+        app:snp_value_text_color="?attr/colorAccent"
+        app:snp_value_text_size="18sp"/>
 
 </RelativeLayout>

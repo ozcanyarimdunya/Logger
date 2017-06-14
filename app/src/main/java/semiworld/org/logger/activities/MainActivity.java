@@ -82,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         ShortcutHelper.with(this)
                 .createShortcut(
-                        "Yeni Not",
-                        "Yeni Not Ekle",
+                        "New Note",
+                        "Add New Note",
                         android.R.drawable.ic_input_add,
                         second)
                 .createShortcut(
-                        "Çirkin",
-                        "Uygulamayı Aç",
+                        "Your Story",
+                        "Launch App",
                         R.drawable.heart,
                         login)
                 .go();

@@ -17,11 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
+import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +31,7 @@ import semiworld.org.logger.models.Setting;
 public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.switchParola) Switch switchParola;
-    @BindView(R.id.txtDuration) EditText txtDuration;
+    @BindView(R.id.txtDuration) ScrollableNumberPicker txtDuration;
     @BindView(R.id.txtPassword) TextView txtPassword;
 
     @Override
@@ -51,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
             txtPassword.setVisibility(View.VISIBLE);
         }
         txtPassword.setText(String.valueOf(setting.password == null ? "" : setting.password));
-        txtDuration.setText(String.valueOf(setting.duration));
+        txtDuration.setValue(setting.duration);
 
         switchParola.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -77,16 +77,10 @@ public class SettingsActivity extends AppCompatActivity {
         if (id == R.id.action_save_setting) {
             Setting setting = new Setting();
             if (switchParola.isChecked() && TextUtils.isEmpty(txtPassword.getText().toString())) return false;
-            if (TextUtils.isEmpty(txtDuration.getText().toString())) return false;
 
             setting.passActivated = switchParola.isChecked();
             setting.password = String.valueOf(txtPassword.getText().toString());
-            int duration = Integer.parseInt(String.valueOf(txtDuration.getText().toString()));
-
-            if (duration > 30)
-                duration = 30;
-
-            setting.duration = duration;
+            setting.duration = txtDuration.getValue();
             setting.save();
             onBackPressed();
         }

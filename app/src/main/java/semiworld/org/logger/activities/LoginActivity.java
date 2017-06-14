@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 } else {
-                    txtPassword.setError("Eksik veya hatalı giriş!");
+                    txtPassword.setError("Wrong credentials!");
                 }
             }
         });
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override public boolean onLongClick(View v) {
                 setting.password = "123";
                 setting.save();
-                Toast.makeText(LoginActivity.this, "Şifre 123 olarak değiştirildi!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Password has been changed to 123!", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

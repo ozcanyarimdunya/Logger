@@ -45,4 +45,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.github.marcoscgdev:shortcut-helper:1.0.2'
+    compile 'com.michaelmuenzer.android:ScrollableNumberPicker:0.2.2'
 }
