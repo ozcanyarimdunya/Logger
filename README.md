@@ -1,7 +1,5 @@
-# Your Story | Logger
-This is a simple android logger application.
-
-### In this application i have used activeandroid for database operations
+# Your Story
+This is a simple note application.
 ----------
 
 ![1](screenshots/app.gif)
