@@ -2,7 +2,7 @@
 This is a simple note application.
 ----------
 
-![1](screenshots/app.gif)
+![1](screenshots/app.1)
 ------
 
 ------
