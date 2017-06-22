@@ -53,7 +53,7 @@ import semiworld.org.logger.models.Version;
 
 public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.switchParola) Switch switchPassword  ;
+    @BindView(R.id.switchParola) Switch switchPassword;
     @BindView(R.id.txtDuration) ScrollableNumberPicker txtDuration;
     @BindView(R.id.txtPassword) TextView txtPassword;
     DownloadManager manager;
