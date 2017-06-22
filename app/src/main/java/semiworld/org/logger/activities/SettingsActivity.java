@@ -46,6 +46,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import semiworld.org.logger.R;
 import semiworld.org.logger.models.Setting;
 import semiworld.org.logger.models.Version;
@@ -118,7 +119,7 @@ public class SettingsActivity extends AppCompatActivity {
         final Version version = new Select().from(Version.class).orderBy("id DESC").executeSingle();
         AppUpdaterUtils utils = new AppUpdaterUtils(SettingsActivity.this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("ozcaan11", "Your-Story")
+                .setGitHubUserAndRepo("ozcaan11", "Logger")
                 .withListener(new AppUpdaterUtils.UpdateListener() {
                     @Override public void onSuccess(Update update, Boolean isUpdateAvailable) {
                         String url = String.valueOf(update.getUrlToDownload() + "/download/" + update.getLatestVersion() + "/app-debug.apk");
@@ -129,7 +130,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 version.save();
                             }
                         } else {
-                            Toast.makeText(SettingsActivity.this, "You are using latest version: " + update.getLatestVersion(), Toast.LENGTH_LONG)
+                            Toasty.success(SettingsActivity.this, "You are using latest version: " + update.getLatestVersion(), Toast.LENGTH_LONG)
                                     .show();
                         }
                     }

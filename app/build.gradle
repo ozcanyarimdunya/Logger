@@ -50,4 +50,5 @@ dependencies {
     compile 'com.github.javiersantos:AppUpdater:2.6.1'
 
     compile 'gun0912.ted:tedpermission:1.0.3'
+    compile 'com.github.GrenderG:Toasty:1.2.5'
 }
