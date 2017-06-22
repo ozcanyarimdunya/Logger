@@ -158,7 +158,7 @@ public class SettingsActivity extends AppCompatActivity {
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
                                 dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
-                                dialog.getActionButton(DialogAction.POSITIVE).setText("Downloading ..");
+                                dialog.getActionButton(DialogAction.POSITIVE).setText("DOWNLOADING ..");
 
                                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                                 request.setDescription("New version of Logger");

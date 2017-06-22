@@ -60,12 +60,12 @@ public class LoginActivity extends AppCompatActivity {
         new MaterialDialog.Builder(LoginActivity.this)
                 .title("Login")
                 .content("Enter the password to login.")
-                .positiveText("Login")
+                .positiveText("LOGIN")
                 .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
                 .input("Password ..", "", false, new MaterialDialog.InputCallback() {
                     @Override public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         if (String.valueOf(setting.password).equals(input.toString())) {
-                            dialog.getActionButton(DialogAction.POSITIVE).setText("Wait ..");
+                            dialog.getActionButton(DialogAction.POSITIVE).setText("WAIT ..");
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         } else {
