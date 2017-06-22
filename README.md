@@ -1,11 +1,6 @@
 # Your Story
 This is a simple note application.
 ----------
-
-![1](screenshots/app.1)
-------
-
-------
 [website](http://www.semiworld.org/)
 ------
                          GNU GENERAL PUBLIC LICENSE
