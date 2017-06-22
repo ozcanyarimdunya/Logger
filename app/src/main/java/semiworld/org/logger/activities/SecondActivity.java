@@ -10,11 +10,9 @@
 package semiworld.org.logger.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -27,6 +25,8 @@ import android.widget.EditText;
 
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -38,10 +38,8 @@ import semiworld.org.logger.models.Note;
 
 public class SecondActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.editTextThoughts)
-    EditText editTextThought;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.editTextThoughts) EditText editTextThought;
     private Note note;
     private Long noteId;
 
@@ -152,26 +150,18 @@ public class SecondActivity extends AppCompatActivity {
 
     // Show an alert dialog to confirm delete
     private void deleteNote() {
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(SecondActivity.this, android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(SecondActivity.this);
-        }
-        builder.setTitle("Delete?")
-                .setMessage("Do you really want to delete?")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+        new MaterialDialog.Builder(SecondActivity.this)
+                .title("Delete?")
+                .content("Do you really want to delete?")
+                .positiveText("Delete")
+                .negativeText("Cancel")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         new Delete().from(Note.class).where("id=?", noteId).execute();
                         onBackPressed();
                     }
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                    }
-                })
-                .setIcon(android.R.drawable.ic_menu_delete)
+                .iconRes(android.R.drawable.ic_menu_delete)
                 .show();
     }
 }

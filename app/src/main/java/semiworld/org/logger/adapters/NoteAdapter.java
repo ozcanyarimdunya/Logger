@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +26,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import semiworld.org.logger.R;
 import semiworld.org.logger.activities.SecondActivity;
 import semiworld.org.logger.models.Note;
@@ -104,30 +105,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     // It is not compatible to use ButterKnife here yet
     class NoteHolder extends RecyclerView.ViewHolder {
 
-        TextView _day;
-        TextView _month;
-        TextView _hour;
-        TextView _text;
+        @BindView(R.id.txtDay) TextView _day;
+        @BindView(R.id.txtMonth) TextView _month;
+        @BindView(R.id.txtHour) TextView _hour;
+        @BindView(R.id.txtText) TextView _text;
 
         // Added
-        SwipeLayout _swipeLayout;
-        Button _btnDelete;
-        RelativeLayout _textLayout;
-        RelativeLayout _container;
-        LinearLayout _delLayout;
-
+        @BindView(R.id.swipe) SwipeLayout _swipeLayout;
+        @BindView(R.id.btnDelete) Button _btnDelete;
+        @BindView(R.id.container_rel_lay) RelativeLayout _textLayout;
 
         NoteHolder(final View itemView) {
             super(itemView);
-            _day = (TextView) itemView.findViewById(R.id.txtDay);
-            _month = (TextView) itemView.findViewById(R.id.txtMonth);
-            _hour = (TextView) itemView.findViewById(R.id.txtHour);
-            _text = (TextView) itemView.findViewById(R.id.txtText);
-            _swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
-            _btnDelete = (Button) itemView.findViewById(R.id.btnDelete);
-            _textLayout = (RelativeLayout) itemView.findViewById(R.id.container_rel_lay);
-            _container = (RelativeLayout) itemView.findViewById(R.id.container);
-            _delLayout = (LinearLayout) itemView.findViewById(R.id.container_lin_lay);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

@@ -13,41 +13,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16sp"
     tools:context="semiworld.org.logger.activities.LoginActivity">
 
-    <EditText
-        android:id="@+id/txtLoginPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:ems="10"
-        android:hint="@string/password_text"
-        android:inputType="textPassword"/>
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/txtLoginPass"
-        android:layout_alignStart="@+id/txtLoginPass"
-        android:layout_below="@+id/txtLoginPass"
-        android:background="@android:color/holo_blue_dark"
-        android:text="@string/login"
-        android:textColor="#fff"
-        android:textSize="18sp"/>
-
-    <Button
-        android:id="@+id/btnHidden"
+    <ImageView
+        android:id="@+id/imgLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:background="@android:color/holo_red_dark"
-        android:text="@string/reset_password"
-        android:textColor="#fff"
-        android:textSize="18sp"
-        android:visibility="visible"/>
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:contentDescription="@string/loading"/>
 </RelativeLayout>

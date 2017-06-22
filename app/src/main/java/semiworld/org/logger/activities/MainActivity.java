@@ -10,10 +10,8 @@
 package semiworld.org.logger.activities;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.activeandroid.query.Select;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,14 +133,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void WhoAmI() {
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(MainActivity.this);
-        }
-        builder.setTitle("INFO")
-                .setMessage("\n\nDesigned by @ozcaan11  |  2017")
-                .setIcon(android.R.drawable.ic_menu_info_details).show();
+        new MaterialDialog.Builder(MainActivity.this)
+                .title("INFO")
+                .content("\n\nDesigned by @ozcaan11 | 2017")
+                .iconRes(android.R.drawable.ic_menu_info_details)
+                .show();
     }
 }

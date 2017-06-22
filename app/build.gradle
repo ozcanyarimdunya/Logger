@@ -46,4 +46,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.github.marcoscgdev:shortcut-helper:1.0.2'
     compile 'com.michaelmuenzer.android:ScrollableNumberPicker:0.2.2'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
+    compile 'com.github.javiersantos:AppUpdater:2.6.1'
+
+    compile 'gun0912.ted:tedpermission:1.0.3'
 }
