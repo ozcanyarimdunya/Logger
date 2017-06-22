@@ -53,7 +53,7 @@ import semiworld.org.logger.models.Version;
 
 public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.switchParola) Switch switchParola;
+    @BindView(R.id.switchParola) Switch switchPassword;
     @BindView(R.id.txtDuration) ScrollableNumberPicker txtDuration;
     @BindView(R.id.txtPassword) TextView txtPassword;
     DownloadManager manager;
@@ -71,13 +71,13 @@ public class SettingsActivity extends AppCompatActivity {
     private void Init() {
         Setting setting = new Select().from(Setting.class).orderBy("id DESC").executeSingle();
         if (setting.passActivated) {
-            switchParola.setChecked(true);
+            switchPassword.setChecked(true);
             txtPassword.setVisibility(View.VISIBLE);
         }
         txtPassword.setText(String.valueOf(setting.password == null ? "" : setting.password));
         txtDuration.setValue(setting.duration);
 
-        switchParola.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        switchPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     txtPassword.setVisibility(View.VISIBLE);
@@ -100,16 +100,21 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (id == R.id.action_save_setting) {
             Setting setting = new Setting();
-            if (switchParola.isChecked() && TextUtils.isEmpty(txtPassword.getText().toString())) return false;
+            if (switchPassword.isChecked() && TextUtils.isEmpty(txtPassword.getText().toString())) return false;
 
-            setting.passActivated = switchParola.isChecked();
+            setting.passActivated = switchPassword.isChecked();
             setting.password = String.valueOf(txtPassword.getText().toString());
             setting.duration = txtDuration.getValue();
             setting.save();
             onBackPressed();
         }
         if (id == R.id.action_check_update) {
-            checkForUpdates();
+            try {
+                checkForUpdates();
+            } catch (Exception e) {
+                Toasty.error(SettingsActivity.this, "Failed! Maybe you should check you internet connection", Toast.LENGTH_LONG).show();
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -130,7 +135,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 version.save();
                             }
                         } else {
-                            Toasty.success(SettingsActivity.this, "You are using latest version: " + update.getLatestVersion(), Toast.LENGTH_LONG)
+                            Toasty.success(SettingsActivity.this, "You are using the latest version: " + update.getLatestVersion(), Toast.LENGTH_LONG)
                                     .show();
                         }
                     }
