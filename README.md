@@ -1,7 +1,7 @@
 # Your Story
 This is a simple note application.
 ----------
-[website](http://www.semiworld.org/)
+[My website](http://www.semiworld.org/)
 ------
                          GNU GENERAL PUBLIC LICENSE
                          Version 3, 29 June 2007
