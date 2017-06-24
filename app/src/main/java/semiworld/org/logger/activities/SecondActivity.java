@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -36,7 +35,7 @@ import butterknife.ButterKnife;
 import semiworld.org.logger.R;
 import semiworld.org.logger.models.Note;
 
-public class SecondActivity extends AppCompatActivity {
+public class SecondActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.editTextThoughts) EditText editTextThought;
@@ -87,6 +86,9 @@ public class SecondActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
             case R.id.action_save:
                 createOrUpdateNote();
                 break;

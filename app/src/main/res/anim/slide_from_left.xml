@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~                    GNU GENERAL PUBLIC LICENSE
+  ~                        Version 3, 29 June 2007
+  ~
+  ~  Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+  ~  Everyone is permitted to copy and distribute verbatim copies
+  ~  of this license document, but changing it is not allowed.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate android:fromXDelta="-100%p" android:toXDelta="0"
+               android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+               android:duration="300"/>
+</set>

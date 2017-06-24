@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,7 +26,7 @@ import butterknife.ButterKnife;
 import semiworld.org.logger.R;
 import semiworld.org.logger.models.Setting;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.imgLogin) ImageView imageView;
 

@@ -12,7 +12,6 @@ package semiworld.org.logger.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -32,7 +31,7 @@ import semiworld.org.logger.R;
 import semiworld.org.logger.adapters.NoteAdapter;
 import semiworld.org.logger.models.Note;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     /*
     Here we have initialize of view or component of ui

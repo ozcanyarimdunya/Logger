@@ -20,7 +20,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -51,7 +50,7 @@ import semiworld.org.logger.R;
 import semiworld.org.logger.models.Setting;
 import semiworld.org.logger.models.Version;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.switchParola) Switch switchPassword;
     @BindView(R.id.txtDuration) ScrollableNumberPicker txtDuration;
@@ -65,6 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Init();
     }
 
@@ -98,25 +98,29 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_save_setting) {
-            Setting setting = new Setting();
-            if (switchPassword.isChecked() && TextUtils.isEmpty(txtPassword.getText().toString())) return false;
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            case R.id.action_save_setting:
+                Setting setting = new Setting();
+                if (switchPassword.isChecked() && TextUtils.isEmpty(txtPassword.getText().toString())) return false;
 
-            setting.passActivated = switchPassword.isChecked();
-            setting.password = String.valueOf(txtPassword.getText().toString());
-            setting.duration = txtDuration.getValue();
-            setting.save();
-            onBackPressed();
+                setting.passActivated = switchPassword.isChecked();
+                setting.password = String.valueOf(txtPassword.getText().toString());
+                setting.duration = txtDuration.getValue();
+                setting.save();
+                onBackPressed();
+                break;
+            case R.id.action_check_update:
+                try {
+                    checkForUpdates();
+                } catch (Exception e) {
+                    Toasty.error(SettingsActivity.this, "Failed! Maybe you should check you internet connection", Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
         }
-        if (id == R.id.action_check_update) {
-            try {
-                checkForUpdates();
-            } catch (Exception e) {
-                Toasty.error(SettingsActivity.this, "Failed! Maybe you should check you internet connection", Toast.LENGTH_LONG).show();
-            }
-
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

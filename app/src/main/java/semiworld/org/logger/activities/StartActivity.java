@@ -12,14 +12,13 @@ package semiworld.org.logger.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 
 import com.activeandroid.query.Select;
 
 import semiworld.org.logger.R;
 import semiworld.org.logger.models.Setting;
 
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
