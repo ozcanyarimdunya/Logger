@@ -55,8 +55,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="semiworld.org.logger.activities.MainActivity"/>
         </activity>
-        <activity android:name=".activities.LoginActivity">
-        </activity>
+        <activity android:name=".activities.LoginActivity"/>
     </application>
 
 </manifest>

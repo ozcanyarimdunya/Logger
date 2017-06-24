@@ -134,7 +134,7 @@ public class SettingsActivity extends BaseActivity {
                         String url = String.valueOf(update.getUrlToDownload() + "/download/" + update.getLatestVersion() + "/app-debug.apk");
                         if (!String.valueOf(version.latest).equals(update.getLatestVersion())) {
                             if (isUpdateAvailable) {
-                                checkPermissionAndDownloadApp(url);
+                                checkPermissionAndDownloadApp(url, version.latest, update.getLatestVersion(), update.getReleaseNotes());
                                 version.latest = update.getLatestVersion();
                                 version.save();
                             }
@@ -150,12 +150,12 @@ public class SettingsActivity extends BaseActivity {
         utils.start();
     }
 
-    private void checkPermissionAndDownloadApp(final String url) {
+    private void checkPermissionAndDownloadApp(final String url, final String oldVersion, final String version, final String releaseNotes) {
         PermissionListener listener = new PermissionListener() {
             @Override public void onPermissionGranted() {
                 new MaterialDialog.Builder(SettingsActivity.this)
-                        .title("There is an update available")
-                        .content("Download latest version of Logger now!")
+                        .title("Logger " + version + " available!")
+                        .content("Update Logger " + oldVersion + " to " + version + " now.\nNew features:\n" + releaseNotes)
                         .iconRes(android.R.drawable.ic_menu_upload)
                         .positiveText("Download")
                         .negativeText("Cancel")
@@ -194,7 +194,13 @@ public class SettingsActivity extends BaseActivity {
                                                     intent.setDataAndType(Uri.parse(uriString),
                                                             manager.getMimeTypeForDownloadedFile(downloadId));
                                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    startActivity(intent);
+                                                    try {
+                                                        startActivity(intent);
+                                                    } catch (Exception e) {
+                                                        onRestart();
+                                                        Toasty.success(SettingsActivity.this, "Application successfully updated to " + version + " " +
+                                                                "version.").show();
+                                                    }
                                                 } else {
                                                     Toast.makeText(context, "Download unsuccessful!", Toast.LENGTH_SHORT).show();
                                                 }
