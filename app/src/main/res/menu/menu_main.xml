@@ -18,9 +18,15 @@
         android:title="@string/info"
         app:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/action_whoami"
+        android:icon="@android:drawable/ic_menu_help"
+        android:orderInCategory="200"
+        android:title="@string/help"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_lock_idle_lock"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         android:title="@string/password"
         app:showAsAction="ifRoom"/>
 </menu>

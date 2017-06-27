@@ -120,21 +120,35 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_info) {
-            WhoAmI();
-        }
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+        switch (id) {
+            case R.id.action_info:
+                Info();
+                break;
+            case R.id.action_whoami:
+                WhoAmI();
+                break;
+            case R.id.action_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
     private void WhoAmI() {
         new MaterialDialog.Builder(MainActivity.this)
-                .title("INFO")
+                .title("Who am I?")
                 .content("\n\nDesigned by @ozcaan11 | 2017")
+                .iconRes(android.R.drawable.ic_menu_help)
+                .show();
+    }
+
+
+    private void Info() {
+        String totalRecord = String.valueOf(new Select().from(Note.class).count());
+        new MaterialDialog.Builder(MainActivity.this)
+                .title("Info")
+                .content("\nTotal record: "+totalRecord)
                 .iconRes(android.R.drawable.ic_menu_info_details)
                 .show();
     }

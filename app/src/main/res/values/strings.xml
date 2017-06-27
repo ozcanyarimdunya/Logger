@@ -11,6 +11,7 @@
     <string name="title_activity_second">Logger</string>
     <string name="save">Save</string>
     <string name="info">Info</string>
+    <string name="help">Who am I?</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="thoughts">Share something ..</string>
