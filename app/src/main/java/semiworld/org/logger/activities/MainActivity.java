@@ -70,27 +70,6 @@ public class MainActivity extends BaseActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-/*
- * run this codes once!
-
-        Intent login = new Intent(Intent.ACTION_VIEW, Uri.EMPTY, MainActivity.this, LoginActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        Intent second = new Intent(Intent.ACTION_VIEW, Uri.EMPTY, MainActivity.this, SecondActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        ShortcutHelper.with(this)
-                .createShortcut(
-                        "New Note",
-                        "Add New Note",
-                        android.R.drawable.ic_input_add,
-                        second)
-                .createShortcut(
-                        "Your Story",
-                        "Launch App",
-                        R.drawable.heart,
-                        login)
-                .go();
-*/
     }
 
     /*

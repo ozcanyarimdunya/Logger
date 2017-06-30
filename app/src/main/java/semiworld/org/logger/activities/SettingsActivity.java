@@ -10,15 +10,7 @@
 package semiworld.org.logger.activities;
 
 import android.Manifest;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -33,10 +25,6 @@ import android.widget.Toast;
 import com.activeandroid.query.Select;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.javiersantos.appupdater.AppUpdaterUtils;
-import com.github.javiersantos.appupdater.enums.AppUpdaterError;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
-import com.github.javiersantos.appupdater.objects.Update;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
@@ -49,13 +37,13 @@ import es.dmoral.toasty.Toasty;
 import semiworld.org.logger.R;
 import semiworld.org.logger.models.Setting;
 import semiworld.org.logger.models.Version;
+import semiworld.org.logger.utils.UpdateManager;
 
 public class SettingsActivity extends BaseActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.switchParola) Switch switchPassword;
     @BindView(R.id.txtDuration) ScrollableNumberPicker txtDuration;
     @BindView(R.id.txtPassword) TextView txtPassword;
-    DownloadManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,112 +91,49 @@ public class SettingsActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.action_save_setting:
-                Setting setting = new Setting();
-                if (switchPassword.isChecked() && TextUtils.isEmpty(txtPassword.getText().toString())) return false;
-
-                setting.passActivated = switchPassword.isChecked();
-                setting.password = String.valueOf(txtPassword.getText().toString());
-                setting.duration = txtDuration.getValue();
-                setting.save();
+                if (!saveSettings()) return false;
                 onBackPressed();
                 break;
             case R.id.action_check_update:
-                try {
-                    checkForUpdates();
-                } catch (Exception e) {
-                    Toasty.error(SettingsActivity.this, "Failed! Maybe you should check you internet connection", Toast.LENGTH_LONG).show();
-                }
+                checkForUpdates();
                 break;
             default:
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkForUpdates() {
-        final Version version = new Select().from(Version.class).orderBy("id DESC").executeSingle();
-        AppUpdaterUtils utils = new AppUpdaterUtils(SettingsActivity.this)
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("ozcaan11", "Logger")
-                .withListener(new AppUpdaterUtils.UpdateListener() {
-                    @Override public void onSuccess(Update update, Boolean isUpdateAvailable) {
-                        String url = String.valueOf(update.getUrlToDownload() + "/download/" + update.getLatestVersion() + "/app-debug.apk");
-                        if (!String.valueOf(version.latest).equals(update.getLatestVersion())) {
-                            if (isUpdateAvailable) {
-                                checkPermissionAndDownloadApp(url, version.latest, update.getLatestVersion(), update.getReleaseNotes());
-                                version.latest = update.getLatestVersion();
-                                version.save();
-                            }
-                        } else {
-                            Toasty.success(SettingsActivity.this, "You are using the latest version: " + update.getLatestVersion(), Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    }
+    private boolean saveSettings() {
+        Setting setting = new Setting();
+        if (switchPassword.isChecked() && TextUtils.isEmpty(txtPassword.getText().toString())) return false;
 
-                    @Override public void onFailed(AppUpdaterError appUpdaterError) {
-                    }
-                });
-        utils.start();
+        setting.passActivated = switchPassword.isChecked();
+        setting.password = String.valueOf(txtPassword.getText().toString());
+        setting.duration = txtDuration.getValue();
+        setting.save();
+        return true;
     }
 
-    private void checkPermissionAndDownloadApp(final String url, final String oldVersion, final String version, final String releaseNotes) {
+    private void checkForUpdates() {
+        final Version version = new Select().from(Version.class).orderBy("id DESC").executeSingle();
+        final String url[] = UpdateManager.checkForUpdate(SettingsActivity.this, version);
+
+
         PermissionListener listener = new PermissionListener() {
             @Override public void onPermissionGranted() {
+                if (String.valueOf(url[0]).equals("")) return;
                 new MaterialDialog.Builder(SettingsActivity.this)
-                        .title("Logger " + version + " available!")
-                        .content("Update Logger " + oldVersion + " to " + version + " now.\nNew features:\n" + releaseNotes)
+                        .title("New version of Logger  available!")
+                        .content("Update Logger now!")
                         .iconRes(android.R.drawable.ic_menu_upload)
-                        .positiveText("Download")
+                        .positiveText("Update")
                         .negativeText("Cancel")
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
+                                version.latest = url[1];
+                                version.save();
                                 dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
-                                dialog.getActionButton(DialogAction.POSITIVE).setText("DOWNLOADING ..");
-
-                                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-                                request.setDescription("New version of Logger");
-                                request.setTitle("Logger");
-                                // in order for this if to run, you must use the android 3.2 to compile your app
-                                request.allowScanningByMediaScanner();
-                                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "app-debug.apk");
-
-                                // get download service and enqueue file
-                                manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                                final Long enq = manager.enqueue(request);
-
-                                BroadcastReceiver receiver = new BroadcastReceiver() {
-                                    @Override public void onReceive(Context context, Intent intent) {
-                                        String action = intent.getAction();
-                                        if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
-                                            long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
-                                            DownloadManager.Query query = new DownloadManager.Query();
-                                            query.setFilterById(enq);
-                                            manager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                                            Cursor c = manager.query(query);
-                                            if (c.moveToFirst()) {
-                                                int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
-                                                if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
-                                                    String uriString = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-                                                    dialog.dismiss();
-                                                    intent = new Intent(Intent.ACTION_VIEW);
-                                                    intent.setDataAndType(Uri.parse(uriString),
-                                                            manager.getMimeTypeForDownloadedFile(downloadId));
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    try {
-                                                        startActivity(intent);
-                                                    } catch (Exception e) {
-                                                        onRestart();
-                                                        Toasty.success(SettingsActivity.this, "Application successfully updated to " + version + " " +
-                                                                "version.").show();
-                                                    }
-                                                } else {
-                                                    Toast.makeText(context, "Download unsuccessful!", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        }
-                                    }
-                                };
-                                registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+                                dialog.getActionButton(DialogAction.POSITIVE).setText("UPDATING ..");
+                                UpdateManager.downloadUpdate(SettingsActivity.this, url[0]);
                             }
                         })
                         .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -222,16 +147,13 @@ public class SettingsActivity extends BaseActivity {
             }
 
             @Override public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-
+                Toasty.error(SettingsActivity.this, "Permission required!\nSettings > Apps > Logger > Permission", Toast.LENGTH_SHORT).show();
             }
         };
 
-
-        new TedPermission(SettingsActivity.this).setPermissions(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.INTERNET,
-                Manifest.permission.ACCESS_NETWORK_STATE)
+        new TedPermission(SettingsActivity.this)
                 .setPermissionListener(listener)
+                .setPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE})
                 .check();
     }
 }
