@@ -32,9 +32,6 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  */
 
 public class UpdateManager {
-    private static String URL = "";
-    private static String VERSION = "";
-
     public static String[] checkForUpdate(Context context, final Version version) {
         final String url[] = new String[]{null, null};
 
