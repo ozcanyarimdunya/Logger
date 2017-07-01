@@ -34,8 +34,11 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_login"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.SecondActivity"
             android:label="@string/title_activity_second"
@@ -54,7 +57,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="semiworld.org.logger.activities.MainActivity"/>
         </activity>
-        <activity android:name=".activities.LoginActivity"/>
     </application>
 
 </manifest>
