@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 import semiworld.org.logger.R;
+import semiworld.org.logger.models.DownloadModel;
 import semiworld.org.logger.models.Setting;
 import semiworld.org.logger.models.Version;
 import semiworld.org.logger.utils.UpdateManager;
@@ -114,13 +115,13 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void checkForUpdates() {
-        final Version version = new Select().from(Version.class).orderBy("id DESC").executeSingle();
-        final String url[] = UpdateManager.checkForUpdate(SettingsActivity.this, version);
-
+        final DownloadModel model = UpdateManager.checkForUpdate(SettingsActivity.this);
 
         PermissionListener listener = new PermissionListener() {
             @Override public void onPermissionGranted() {
-                if (String.valueOf(url[0]).equals("")) return;
+                if (String.valueOf(model.getUrl()).equals("")) {
+                    return;
+                }
                 new MaterialDialog.Builder(SettingsActivity.this)
                         .title("New version of Logger  available!")
                         .content("Update Logger now!")
@@ -129,11 +130,13 @@ public class SettingsActivity extends BaseActivity {
                         .negativeText("Cancel")
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
-                                version.latest = url[1];
-                                version.save();
                                 dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
                                 dialog.getActionButton(DialogAction.POSITIVE).setText("UPDATING ..");
-                                UpdateManager.downloadUpdate(SettingsActivity.this, url[0]);
+                                UpdateManager.downloadUpdate(SettingsActivity.this, model.getUrl());
+
+                                final Version version = new Select().from(Version.class).orderBy("id DESC").executeSingle();
+                                version.latest = model.getLatestVersion();
+                                version.save();
                             }
                         })
                         .onNegative(new MaterialDialog.SingleButtonCallback() {

@@ -18,11 +18,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 
+import com.activeandroid.query.Select;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
 import com.github.javiersantos.appupdater.enums.AppUpdaterError;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.github.javiersantos.appupdater.objects.Update;
 
+import semiworld.org.logger.models.DownloadModel;
 import semiworld.org.logger.models.Version;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -32,20 +34,23 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  */
 
 public class UpdateManager {
-    public static String[] checkForUpdate(Context context, final Version version) {
-        final String url[] = new String[]{null, null};
+    public static DownloadModel checkForUpdate(Context context) {
+        final Version version = new Select().from(Version.class).orderBy("id DESC").executeSingle();
+
+        final DownloadModel model = new DownloadModel();
+        model.setLatestVersion(version.latest);
 
         AppUpdaterUtils utils = new AppUpdaterUtils(context)
                 .setUpdateFrom(UpdateFrom.GITHUB)
                 .setGitHubUserAndRepo("ozcaan11", "Logger")
                 .withListener(new AppUpdaterUtils.UpdateListener() {
+
                     @Override public void onSuccess(Update update, Boolean isUpdateAvailable) {
                         String latestVersion = update.getLatestVersion();
                         if (!String.valueOf(version.latest).equals(latestVersion)) {
                             if (isUpdateAvailable) {
-                                url[0] = String.valueOf(update.getUrlToDownload() + "/download/" +
-                                        latestVersion + "/app-debug.apk");
-                                url[1] = latestVersion;
+                                String url = String.valueOf(update.getUrlToDownload() + "/download/" + latestVersion + "/app-debug.apk");
+                                model.setUrl(url);
                             }
                         }
                     }
@@ -53,9 +58,9 @@ public class UpdateManager {
                     @Override public void onFailed(AppUpdaterError appUpdaterError) {
                     }
                 });
-        utils.start();
 
-        return url;
+        utils.start();
+        return model;
     }
 
     public static void downloadUpdate(Context context, String url) {
