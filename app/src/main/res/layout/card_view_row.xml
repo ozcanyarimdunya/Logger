@@ -74,7 +74,7 @@
 
                 <TextView
                     android:id="@+id/txtDay"
-                    android:layout_width="50dp"
+                    android:layout_width="60dp"
                     android:layout_height="50dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
@@ -85,7 +85,7 @@
 
                 <TextView
                     android:id="@+id/txtMonth"
-                    android:layout_width="50dp"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"

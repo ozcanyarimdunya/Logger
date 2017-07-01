@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import semiworld.org.logger.models.Note;
 import semiworld.org.logger.models.Setting;
-import semiworld.org.logger.models.Version;
 
 /**
  * Created on 07.06.2017.
@@ -42,10 +41,9 @@ public class AppStart extends Application {
         */
         Configuration conf = new Configuration.Builder(getApplicationContext())
                 .setDatabaseName("LoggerDB")
-                .setDatabaseVersion(8)
+                .setDatabaseVersion(9)
                 .addModelClass(Note.class)
                 .addModelClass(Setting.class)
-                .addModelClass(Version.class)
                 .create();
 
         ActiveAndroid.initialize(conf);
@@ -59,7 +57,6 @@ public class AppStart extends Application {
         // Have a look if there is any data
         boolean _thereIsNoData = new Select().from(Note.class).count() == 0;
         boolean _thereIsNoSetting = new Select().from(Setting.class).count() == 0;
-        boolean _thereIsNoVersion = new Select().from(Version.class).count() == 0;
 
         Log.v("abc", String.valueOf(_thereIsNoData + " " + _thereIsNoSetting));
 
@@ -73,10 +70,6 @@ public class AppStart extends Application {
         if (_thereIsNoSetting) {
             Setting setting = new Setting(false, "", 3);
             setting.save();
-        }
-        if (_thereIsNoVersion) {
-            Version version = new Version("1.0.0");
-            version.save();
         }
     }
 }
