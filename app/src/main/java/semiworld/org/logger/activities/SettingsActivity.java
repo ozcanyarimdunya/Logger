@@ -116,27 +116,29 @@ public class SettingsActivity extends BaseActivity {
 
     private void checkForUpdates() {
         final DownloadModel model = UpdateManager.checkForUpdate(SettingsActivity.this);
+        final Version version = new Select().from(Version.class).orderBy("id DESC").executeSingle();
 
         PermissionListener listener = new PermissionListener() {
             @Override public void onPermissionGranted() {
-                if (String.valueOf(model.getUrl()).equals("")) {
+                if (String.valueOf(model.getLatestVersion()).equals(version.latest)) {
+                    Toasty.info(SettingsActivity.this, "You are using latest version: " + model.getLatestVersion(), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 new MaterialDialog.Builder(SettingsActivity.this)
-                        .title("New version of Logger  available!")
+                        .title("Logger " + model.getLatestVersion() + " available!")
                         .content("Update Logger now!")
                         .iconRes(android.R.drawable.ic_menu_upload)
                         .positiveText("Update")
                         .negativeText("Cancel")
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
-                                dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
-                                dialog.getActionButton(DialogAction.POSITIVE).setText("UPDATING ..");
-                                UpdateManager.downloadUpdate(SettingsActivity.this, model.getUrl());
-
-                                final Version version = new Select().from(Version.class).orderBy("id DESC").executeSingle();
                                 version.latest = model.getLatestVersion();
                                 version.save();
+
+                                dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
+                                dialog.getActionButton(DialogAction.NEGATIVE).setEnabled(false);
+                                dialog.getActionButton(DialogAction.POSITIVE).setText("UPDATING ...");
+                                UpdateManager.downloadUpdate(SettingsActivity.this, model.getUrl());
                             }
                         })
                         .onNegative(new MaterialDialog.SingleButtonCallback() {
